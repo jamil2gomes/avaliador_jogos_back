@@ -16,10 +16,14 @@ module.exports = (sequelize, DataTypes) => {
 
       Jogos.belongsToMany(models.Plataformas,{ 
         through: models.Jogo_Plataformas,
+        foreignKey: 'jogo_id', 
+        otherKey: 'plataforma_id'
       });
 
       Jogos.belongsToMany(models.Generos,{ 
         through: models.Jogo_Generos,
+        foreignKey: 'jogo_id', 
+        otherKey: 'genero_id'
        });
     }
   }

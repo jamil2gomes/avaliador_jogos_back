@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Generos.belongsToMany(models.Jogos,{ 
         through: models.Jogo_Generos,
+        foreignKey: 'genero_id', 
+        otherKey: 'jogo_id'
        });
     }
   }

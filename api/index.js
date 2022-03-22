@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const routes = require('./routers');
 const NaoEncontrado = require('./erros/NaoEncontrado');
