@@ -20,11 +20,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Usuarios.init({
-    nome: DataTypes.STRING(30),
+    nome: {
+      type:DataTypes.STRING(30),
+      allowNull: false,
+    },
     nickname: DataTypes.STRING(15),
-    email: DataTypes.STRING,
-    senha: DataTypes.STRING,
-    role: DataTypes.ENUM('ADMIN', 'PROFESSOR')
+    email: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        isEmail:{
+          msg:"Campo email inválido"
+        }
+      }
+    },
+    senha:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notEmpty:{
+          msg:"Senha não pode ser vazia"
+        }
+      }
+    },
+    role:{ 
+      type: DataTypes.ENUM('ADMIN', 'PROFESSOR'),
+      defaultValue:'PROFESSOR'
+    }
   }, {
     sequelize,
     modelName: 'Usuarios',

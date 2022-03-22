@@ -40,9 +40,8 @@ class JogoController{
     
     try {
       const dadosRecebidos = requisicao.body;
-      const jogo = await service.create(dadosRecebidos);
-      console.log(jogo)
-      resposta.status(204).send(jogo);
+      await service.create(dadosRecebidos);
+      resposta.status(201).end();
     } catch (error) {
       proximo(error);
     }

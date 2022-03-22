@@ -6,14 +6,13 @@ const LocalStrategy = require('passport-local').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const NaoEncontrado = require('../erros/NaoEncontrado');
 const ArgumentoInvalido = require('../erros/ArgumentoInvalido');
-
-
-
+const DadosNaoFornecidos = require('../erros/DadosNaoFornecidos');
 
 
 function verifica(usuario){
   if(!usuario) throw new NaoEncontrado('Usuário');
 }
+
 
 async function verificaSenha(senhaEnviada, senhaHash){
   const senhaValida = await bcrypt.compare(senhaEnviada, senhaHash);
@@ -29,10 +28,11 @@ passport.use(new LocalStrategy({
   try {
     const usuario = await Usuario.findOne({where:{email:email}});
     verifica(usuario);
-    await verificaSenha(senha, usuario.senha);
+    await verificaSenha(senha, usuario.senha); 
 
     done(null, usuario);
   } catch (error) {
+    console.log(error)
     done(error);
   }
   
@@ -48,7 +48,6 @@ passport.use(new BearerStrategy(async function(token, done) {
     done(error);
   }
   
-}
-));
+}));
 
 module.exports = passport;

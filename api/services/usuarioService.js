@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 module.exports = {
 
   async getAll(){
-    return await Generos.findAll({
+    return await Usuarios.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       order:[
         ['descricao', 'ASC']
