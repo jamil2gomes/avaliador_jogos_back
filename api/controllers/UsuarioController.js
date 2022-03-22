@@ -11,13 +11,17 @@ class UsuarioController{
     
     try {
       const dadosRecebidos = requisicao.body;
-      const usuario = await service.create(dadosRecebidos);
-
-      resposta.status(201).send(usuario);
+      await service.create(dadosRecebidos);
+      resposta.status(201).end();
     } catch (error) {
       proximo(error);
     }
   }
+
+  static login(requisicao, resposta){
+    resposta.status(204).end();
+  }
+
 
 }
 

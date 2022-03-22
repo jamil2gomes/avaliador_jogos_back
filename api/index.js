@@ -4,7 +4,7 @@ const NaoEncontrado = require('./erros/NaoEncontrado');
 const CampoInvalido = require('./erros/CampoInvalido');
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
-
+const estrategias  = require('./estrategias');
 
 let app = express();
 
@@ -52,8 +52,9 @@ app.use((erro, requisicao, resposta, proximo) => {
   resposta.status(status)
   resposta.send(
       JSON.stringify({
-          mensagem: erro.message,
-          id: erro.idErro
+          id: erro.idErro,
+          name:erro.name,
+          mensagem: erro.message,       
       })
   )
 })
