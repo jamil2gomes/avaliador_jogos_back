@@ -114,6 +114,28 @@ module.exports = {
 
   },
 
+  async pegarTodasAvaliacoesDadoJogoDadoPlataforma(jogo_id, plataforma_id) {
+    const resposta =  await Avaliacoes.findAndCountAll({
+      attributes:[
+        [Sequelize.fn('AVG', Sequelize.col('audio')),'audio'],
+        [Sequelize.fn('AVG', Sequelize.col('feedback')),'feedback'],
+        [Sequelize.fn('AVG', Sequelize.col('cores')),'cores'],
+        [Sequelize.fn('AVG', Sequelize.col('interface')),'interface'],
+      ],
+      where:{
+        jogo_id:jogo_id,
+        plataforma_id:plataforma_id
+      },
+      raw:true,
+    });
+   
+
+    const media = this._calcularMediaDaAvaliacao(resposta.rows[0]);
+
+    return {...resposta.rows[0], media:media.toFixed(2), quantidaAvaliacoes:resposta.count}
+
+  },
+
   async deletarAvaliacao(id){
     const avaliacao = await Avaliacoes.findByPk(id);
 

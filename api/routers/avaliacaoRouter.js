@@ -22,8 +22,12 @@ router.options('/:avaliacaoId', (requisicao, resposta) => {
   resposta.set('Access-Control-Allow-Headers', 'Content-Type,  x-access-key');
   resposta.status(204).end();
 })
+
 router.put('/:avaliacaoId', AvaliacaoController.atualizarAvaliacao);
 router.delete('/:avaliacaoId', AvaliacaoController.deletarAvaliacao);
+
+
+router.get('/plataformas/:plataformaId', AvaliacaoController.pegarTodasAvaliacoesDadoJogoDadoPlataforma);
 
 
 module.exports = router;
