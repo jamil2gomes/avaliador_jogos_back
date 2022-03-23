@@ -7,8 +7,9 @@ module.exports = {
 
   //MEDIA DADA PELO JOGADOR
   async pegarAvaliacaoDoJogoDoUsuario(jogo_id, usuario_id) {
+    
     const resposta = await Avaliacoes.findOne({
-      attributes:['audio', 'feedback', 'cores', 'interface'],
+      attributes:['id', 'audio', 'feedback', 'cores', 'interface'],
       where:{
         jogo_id:jogo_id,
         usuario_id:usuario_id
@@ -16,11 +17,10 @@ module.exports = {
       raw:true,
     });
 
-    const media = (
-      parseFloat(resposta.audio) 
-    + parseFloat(resposta.feedback) 
-    + parseFloat(resposta.cores) 
-    + parseFloat(resposta.interface))/4.0;
+    if(!resposta)
+      return {mensagem:"Sem avaliação registrada"}
+
+    const media = this._calcularMediaDaAvaliacao(resposta);
 
     const data = {...resposta, media:Number(media.toFixed(2))};
 
@@ -28,47 +28,65 @@ module.exports = {
   
   },
 
-  async editarAvaliacaoDoJogo(dadosRecebidos, jogo_id, usuario_id) {
+  _calcularMediaDaAvaliacao(dados){
+    const media = (
+      parseFloat(dados.audio) 
+    + parseFloat(dados.feedback) 
+    + parseFloat(dados.cores) 
+    + parseFloat(dados.interface))/4.0;
+
+    return media;
+  },
+
+
+  _validarDadosAntesDeAtualizar(dados){
+    const campos = ['audio', 'feedback', 'cores', 'interface'];
+    const dadosParaAtualizar = {};
+  
+    campos.forEach((campo) => {
+      const valor = dados[campo];
+  
+      if (campo === 'audio' && typeof valor === 'number') {
+        dadosParaAtualizar[campo] = valor;
+      }
+      if (campo === 'feedback' && typeof valor === 'number') {
+        dadosParaAtualizar[campo] = valor;
+      }
+      if (campo === 'cores' && typeof valor === 'number') {
+        dadosParaAtualizar[campo] = valor;
+      }
+      if (campo === 'interface' && typeof valor === 'number') {
+        dadosParaAtualizar[campo] = valor;
+      }
+    });
+  
+    if (Object.keys(dadosParaAtualizar).length === 0) {
+      throw new DadosNaoFornecidos();
+    }
+
+    return dadosParaAtualizar;
+  },
+
+  async editarAvaliacaoDoJogo(dadosRecebidos) {
     const avaliacao = await Avaliacoes.findOne({
       where:{
-        jogo_id:jogo_id,
-        usuario_id:usuario_id
+        jogo_id:dadosRecebidos.jogo_id,
+        usuario_id:dadosRecebidos.usuario_id,
+        id: dadosRecebidos.id,
       },
       raw:true,
     });
 
-    if(!resposta) throw new NaoEncontrado('Avaliação');
+  if(!avaliacao) throw new NaoEncontrado('Avaliação');
 
-  const campos = ['audio', 'feedback', 'cores', 'interface'];
-  const dadosParaAtualizar = {};
-
-  campos.forEach((campo) => {
-    const valor = avaliacao[campo]
-
-    if (campo === 'audio' && typeof valor === 'number') {
-      dadosParaAtualizar[campo] = valor;
-    }
-    if (campo === 'feedback' && typeof valor === 'number') {
-      dadosParaAtualizar[campo] = valor;
-    }
-    if (campo === 'cores' && typeof valor === 'number') {
-      dadosParaAtualizar[campo] = valor;
-    }
-    if (campo === 'interface' && typeof valor === 'number') {
-      dadosParaAtualizar[campo] = valor;
-    }
-  })
-
-  if (Object.keys(dadosParaAtualizar).length === 0) {
-    throw new DadosNaoFornecidos();
-  }
+  const dadosParaAtualizar = this._validarDadosAntesDeAtualizar(dadosRecebidos);
 
     await Avaliacoes.update(
-      dadosRecebidos,
+      dadosParaAtualizar,
       {
         where: { 
-          jogo_id: jogo_id,
-          usuario_id:usuario_id
+          jogo_id: dadosRecebidos.jogo_id,
+          usuario_id:dadosRecebidos.usuario_id
         }
       })
   
@@ -76,7 +94,7 @@ module.exports = {
 
   //MEDIA TOTAL DO JOGO
   async pegarTodasAvaliacoesDadoJogo(jogo_id) {
-    const resposta =  await Avaliacoes.findOne({
+    const resposta =  await Avaliacoes.findAndCountAll({
       attributes:[
         [Sequelize.fn('AVG', Sequelize.col('audio')),'audio'],
         [Sequelize.fn('AVG', Sequelize.col('feedback')),'feedback'],
@@ -88,16 +106,27 @@ module.exports = {
       },
       raw:true,
     });
- 
-    const media = (
-      parseFloat(resposta.audio) 
-    + parseFloat(resposta.feedback) 
-    + parseFloat(resposta.cores) 
-    + parseFloat(resposta.interface))/4.0;
+   
 
-    return {media:media.toFixed(2)}
+    const media = this._calcularMediaDaAvaliacao(resposta.rows[0]);
+
+    return {media:media.toFixed(2), quantidaAvaliacoes:resposta.count}
 
   },
+
+  async cadastrarAvaliacao(dados) {
+    return await Avaliacoes.create({
+      audio:dados.audio,
+      feedback:dados.feedback,
+      cores:dados.cores,
+      interface:dados.interface,
+      jogo_id:dados.jogo_id,
+      usuario_id:dados.usuario_id,
+      plataforma_id:dados.plataforma_id,
+    });
+  },
+
+
 
 
 
