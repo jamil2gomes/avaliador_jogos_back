@@ -8,7 +8,6 @@ class ComentarioController{
     
     try {
       const jogoId = requisicao.jogo.id;
-      console.log(jogoId, requisicao.jogo.id)
       const comentarios = await service.pegarComentariosDadoJogo(jogoId);
       resposta.status(200).send(comentarios);
     } catch (error) {
