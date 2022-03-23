@@ -56,6 +56,17 @@ class AvaliacaoController{
       proximo(error);
     }
   }
+
+  static async deletarAvaliacao(requisicao, resposta, proximo){
+
+    const id = requisicao.params.avaliacaoId;
+    try {
+      await service.deletarAvaliacao(id);
+      resposta.status(204).end();
+    } catch (error) {
+      proximo(error);
+    }
+  }
 }
 
 module.exports = AvaliacaoController;

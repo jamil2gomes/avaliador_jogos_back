@@ -114,6 +114,18 @@ module.exports = {
 
   },
 
+  async deletarAvaliacao(id){
+    const avaliacao = await Avaliacoes.findByPk(id);
+
+    if(!avaliacao) throw new NaoEncontrado('Avaliação');
+
+    return await Avaliacoes.destroy({
+      where: {
+        id: avaliacao.id
+      }
+    });
+  },
+
   async cadastrarAvaliacao(dados) {
     return await Avaliacoes.create({
       audio:dados.audio,

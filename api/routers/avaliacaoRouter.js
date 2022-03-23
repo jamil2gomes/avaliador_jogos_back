@@ -23,7 +23,7 @@ router.options('/:avaliacaoId', (requisicao, resposta) => {
   resposta.status(204).end();
 })
 router.put('/:avaliacaoId', AvaliacaoController.atualizarAvaliacao);
-router.delete('/:avaliacaoId', AvaliacaoController.pegarTodasAvaliacoesDadoJogo);
+router.delete('/:avaliacaoId', AvaliacaoController.deletarAvaliacao);
 
 
 module.exports = router;
