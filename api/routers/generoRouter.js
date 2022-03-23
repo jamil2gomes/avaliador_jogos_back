@@ -6,7 +6,7 @@ const router = Router();
 
 router.options('/generos', (requisicao, resposta) => {
   resposta.set('Access-Control-Allow-Methods', 'GET, POST');
-  resposta.set('Access-Control-Allow-Headers', 'Content-Type');
+  resposta.set('Access-Control-Allow-Headers', 'Content-Type,  x-access-key');
   resposta.status(204).end();
 });
 

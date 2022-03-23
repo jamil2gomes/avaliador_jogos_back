@@ -1,5 +1,6 @@
 
 const service = require('../services/jogoService');
+const serviceUser = require('../services/usuarioService');
 
 
 
@@ -58,6 +59,7 @@ class JogoController{
       proximo(error);
     }
   }
+
 
 }
 

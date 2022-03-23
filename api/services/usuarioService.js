@@ -12,6 +12,12 @@ module.exports = {
       ]
     });
   },
+  async getBy(id){
+    return await Usuarios.findOne({
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      where:{id}
+    });
+  },
 
  async gerarSenhaHash(senha){
     const custo = 12;

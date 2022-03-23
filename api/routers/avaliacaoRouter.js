@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const ComentarioController = require('../controllers/ComentarioController');
+const AvaliacaoController = require('../controllers/AvaliacaoController');
 
 
 const router = Router();
@@ -8,11 +8,11 @@ router.options('/', (requisicao, resposta) => {
   resposta.set('Access-Control-Allow-Methods', 'GET, POST');
   resposta.set('Access-Control-Allow-Headers', 'Content-Type,  x-access-key');
   resposta.status(204).end();
-});
+})
 
-router.get('/', ComentarioController.pegarTodosComentarios);
+.get('/usuario/:idUsuario', AvaliacaoController.pegarAvaliacaoDoJogoDoUsuario)
 
-
+.get('/', AvaliacaoController.pegarTodasAvaliacoesDadoJogo);
 
 
 module.exports = router;
