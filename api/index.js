@@ -31,6 +31,7 @@ app.use((requisicao, resposta, proximo) => {
 
 app.use((requisicao, resposta, proximo) => {
   resposta.set('Access-Control-Allow-Origin', '*');
+  res.set('X-Powered-By', 'PHP/7.1.7');
   proximo();
 });
 
