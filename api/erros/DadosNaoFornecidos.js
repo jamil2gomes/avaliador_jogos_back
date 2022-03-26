@@ -1,7 +1,10 @@
 class DadosNaoFornecidos extends Error {
-  constructor () {
-      super('Não foram fornecidos dados para atualizar!')
-      this.name = 'DadosNaoFornecidos'
+  constructor (campo='') {
+      if(campo!== '')
+        super(`Não foram fornecidos dados para completar ação!\n Campo ${campo} vazio`)
+      else
+      super(`Não foram fornecidos dados para completar ação!\n`)
+      this.name = 'Dados Nao Fornecidos'
       this.idErro = 2
   }
 }

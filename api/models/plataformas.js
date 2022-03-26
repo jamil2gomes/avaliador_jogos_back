@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
 
       Plataformas.belongsToMany(models.Jogos,{ 
         through: models.Jogo_Plataformas,
+        foreignKey: 'plataforma_id', 
+        otherKey: 'jogo_id'
       });
     }
   }

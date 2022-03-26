@@ -1,10 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const routes = require('./routers');
 const NaoEncontrado = require('./erros/NaoEncontrado');
 const CampoInvalido = require('./erros/CampoInvalido');
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
-
+const ArgumentoInvalido = require('./erros/ArgumentoInvalido');
+const estrategias  = require('./estrategias');
 
 let app = express();
 
@@ -29,6 +31,7 @@ app.use((requisicao, resposta, proximo) => {
 
 app.use((requisicao, resposta, proximo) => {
   resposta.set('Access-Control-Allow-Origin', '*');
+  resposta.set('X-Powered-By', 'PHP/7.1.7');
   proximo();
 });
 
@@ -37,23 +40,28 @@ routes(app);
 app.use((erro, requisicao, resposta, proximo) => {
   let status = 500
 
+  if(erro instanceof ArgumentoInvalido || erro.name === 'JsonWebTokenError'){
+      status = 401;
+  }
+
   if (erro instanceof NaoEncontrado) {
-      status = 404
+      status = 404.
   }
 
   if (erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos) {
-      status = 400
+      status = 400;
   }
 
   if (erro instanceof ValorNaoSuportado) {
-      status = 406
+      status = 406;
   }
 
   resposta.status(status)
   resposta.send(
       JSON.stringify({
-          mensagem: erro.message,
-          id: erro.idErro
+          id: erro.idErro,
+          name:erro.name,
+          mensagem: erro.message,       
       })
   )
 })

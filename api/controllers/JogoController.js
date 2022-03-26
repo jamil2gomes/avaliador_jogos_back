@@ -1,14 +1,25 @@
 
 const service = require('../services/jogoService');
+const serviceUser = require('../services/usuarioService');
 
 
 
 
 class JogoController{
 
-  static async pegarTodosJogos(requisicao, resposta, proximo){
+  static async pegarDetalhesJogo(requisicao, resposta, proximo){
+    const {id} = requisicao.params;
     try {
-      const jogos = await service.getAll();
+      const jogos = await service.getAll(id);
+      resposta.status(200).send(jogos);
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
+  static async pegarJogosParaTelaInicial(requisicao, resposta, proximo){
+    try {
+      const jogos = await service.pegaTodosParaTelaInicial();
       resposta.status(200).send(jogos);
     } catch (error) {
       proximo(error);
@@ -26,6 +37,17 @@ class JogoController{
     }
   }
 
+  static async criarJogo(requisicao, resposta, proximo){
+    
+    try {
+      const dadosRecebidos = requisicao.body;
+      await service.create(dadosRecebidos);
+      resposta.status(201).end();
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
   static async verificarJogo(requisicao, resposta, proximo){
     
     try {
@@ -37,6 +59,7 @@ class JogoController{
       proximo(error);
     }
   }
+
 
 }
 
