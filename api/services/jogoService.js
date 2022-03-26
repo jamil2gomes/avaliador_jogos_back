@@ -7,7 +7,7 @@ const NaoEncontrado = require('../erros/NaoEncontrado');
 module.exports = {
 
   async getAll(id){
-    const jogos =  await Jogos.findAll({
+    const jogos =  await Jogos.findOne({
       where:{
         id
       },

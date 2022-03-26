@@ -110,7 +110,7 @@ module.exports = {
 
     const media = this._calcularMediaDaAvaliacao(resposta.rows[0]);
 
-    return {media:media.toFixed(2), quantidaAvaliacoes:resposta.count}
+    return {media:media.toFixed(2), quantidaAvaliacoes:resposta.count, medias: resposta.rows[0]}
 
   },
 

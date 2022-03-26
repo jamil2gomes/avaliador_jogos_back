@@ -66,6 +66,8 @@ app.use((erro, requisicao, resposta, proximo) => {
   )
 })
 
-app.listen(3000, ()=>{console.log('Server is runing on port 3000');});
+
+
+app.listen(process.env.PORTA_SERVIDOR, ()=>{console.log(`SERVIDOR RODANDO NA PORTA ${process.env.PORTA_SERVIDOR}`);});
 
 module.exports = app;

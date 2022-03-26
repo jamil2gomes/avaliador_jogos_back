@@ -10,12 +10,18 @@ const router = Router();
 router
 .options('/jogos', (requisicao, resposta) => {
   resposta.set('Access-Control-Allow-Methods', 'GET, POST');
-  resposta.set('Access-Control-Allow-Headers', 'Content-Type,  x-access-key');
+  resposta.set('Access-Control-Allow-Headers', '*')
   resposta.status(204).end();
 })
 
 .get('/jogos', JogoController.pegarJogosParaTelaInicial)
-.post('/jogos', passport.authenticate('bearer',{session:false}), JogoController.criarJogo)
+.post('/jogos', JogoController.criarJogo)
+router
+.options('/jogos/:id', (requisicao, resposta) => {
+  resposta.set('Access-Control-Allow-Methods', 'GET');
+  resposta.set('Access-Control-Allow-Headers', '*')
+  resposta.status(204).end();
+})
 .get('/jogos/:id', JogoController.pegarDetalhesJogo)
 
 .use(
