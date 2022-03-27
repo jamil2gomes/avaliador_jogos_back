@@ -79,6 +79,17 @@ class AvaliacaoController{
       proximo(error);
     }
   }
+
+  static async pegarTodasAvaliacoesDadoJogoDadoPlataforma(requisicao, resposta, proximo){
+    const jogoId = requisicao.jogo.id;
+    const plataformaId = requisicao.params.plataformaId;
+    try {
+      const avaliacao = await service.pegarTodasAvaliacoesDadoJogoDadoPlataforma(jogoId, plataformaId);
+      resposta.status(200).send(avaliacao);
+    } catch (error) {
+      proximo(error);
+    }
+  }
 }
 
 module.exports = AvaliacaoController;
