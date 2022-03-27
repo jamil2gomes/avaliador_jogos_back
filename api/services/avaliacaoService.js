@@ -1,4 +1,5 @@
 const Avaliacoes = require('../models').Avaliacoes;
+const Plataformas = require('../models').Plataformas;
 const Sequelize = require('sequelize');
 const NaoEncontrado = require('../erros/NaoEncontrado');
 const DadosNaoFornecidos = require('../erros/DadosNaoFornecidos');
@@ -35,7 +36,7 @@ module.exports = {
     + parseFloat(dados.cores) 
     + parseFloat(dados.interface))/4.0;
 
-    return media;
+    return media.toFixed(1);
   },
 
 
@@ -106,11 +107,43 @@ module.exports = {
       },
       raw:true,
     });
-   
 
-    const media = this._calcularMediaDaAvaliacao(resposta.rows[0]);
+    if(resposta.rows.length !== 0){
+      const media = this._calcularMediaDaAvaliacao(resposta.rows[0]);
+      return {media:media, quantidaAvaliacoes:resposta.count, medias: {
+        Audio: parseFloat(resposta.rows[0].audio).toFixed(1),
+        Feedback: parseFloat(resposta.rows[0].feedback).toFixed(1),
+        Cores: parseFloat(resposta.rows[0].cores).toFixed(1),
+        Interface: parseFloat(resposta.rows[0].interface).toFixed(1),
+      }}
+    }
 
-    return {media:media.toFixed(2), quantidaAvaliacoes:resposta.count, medias: resposta.rows[0]}
+    return {media:0.0, 
+      quantidaAvaliacoes:resposta.count, 
+      medias: {}
+    }
+  },
+
+  async pegarTodasAvaliacoesDoJogoPorPlataforma(jogo_id) {
+    const resposta =  await Avaliacoes.findAll({
+      attributes:[
+        [Sequelize.fn('AVG', Sequelize.col('audio')),'audio'],
+        [Sequelize.fn('AVG', Sequelize.col('feedback')),'feedback'],
+        [Sequelize.fn('AVG', Sequelize.col('cores')),'cores'],
+        [Sequelize.fn('AVG', Sequelize.col('interface')),'interface'],
+        'plataforma_id'
+      ],
+      include:{
+        model:Plataformas,
+        attributes:['descricao']
+      },
+      where:{
+        jogo_id:jogo_id,
+      },
+      group: 'plataforma_id',
+    });
+
+    return {medias: resposta}
 
   },
 

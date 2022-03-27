@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING(50)
       },
       sinopse: {
-        type: Sequelize.STRING(400)
+        type: Sequelize.STRING(600)
       },
       data_lancamento: {
         type: Sequelize.DATEONLY

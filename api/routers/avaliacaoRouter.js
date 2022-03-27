@@ -22,6 +22,14 @@ router.options('/usuario/:idUsuario', (requisicao, resposta) => {
 
 router.get('/usuario/:idUsuario', AvaliacaoController.pegarAvaliacaoDoJogoDoUsuario);
 
+router.options('/plataformas', (requisicao, resposta) => {
+  resposta.set('Access-Control-Allow-Methods', 'GET');
+  resposta.set('Access-Control-Allow-Headers', '*');
+  resposta.status(204).end();
+});
+
+router.get('/plataformas', AvaliacaoController.pegarTodasAvaliacoesDoJogoPorPlataforma);
+
 
 router.options('/:avaliacaoId', (requisicao, resposta) => {
   resposta.set('Access-Control-Allow-Methods', 'PUT, DELETE');

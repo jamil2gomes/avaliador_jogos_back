@@ -28,6 +28,18 @@ class AvaliacaoController{
     }
   }
 
+  static async pegarTodasAvaliacoesDoJogoPorPlataforma(requisicao, resposta, proximo){
+
+    const jogoId = requisicao.jogo.id;
+    
+    try {
+      const avaliacao = await service.pegarTodasAvaliacoesDoJogoPorPlataforma(jogoId);
+      resposta.status(200).send(avaliacao);
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
   static async criarAvaliacao(requisicao, resposta, proximo){
 
     const jogo_id = requisicao.jogo.id;
