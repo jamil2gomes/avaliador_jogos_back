@@ -17,6 +17,16 @@ class JogoController{
     }
   }
 
+  static async pegarPlataformasDadoJogo(requisicao, resposta, proximo){
+    const {id} = requisicao.params;
+    try {
+      const jogos = await service.getAllPlataformasPorJogo(id);
+      resposta.status(200).send(jogos);
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
   static async pegarJogosParaTelaInicial(requisicao, resposta, proximo){
     try {
       const jogos = await service.pegaTodosParaTelaInicial();

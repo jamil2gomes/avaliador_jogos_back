@@ -24,6 +24,15 @@ router
 })
 .get('/jogos/:id', JogoController.pegarDetalhesJogo)
 
+
+router
+.options('/jogos/:id/plataformas', (requisicao, resposta) => {
+  resposta.set('Access-Control-Allow-Methods', 'GET');
+  resposta.set('Access-Control-Allow-Headers', '*')
+  resposta.status(204).end();
+})
+.get('/jogos/:id/plataformas', JogoController.pegarPlataformasDadoJogo)
+
 .use(
   '/jogos/:idJogo/avaliacao/', 
   JogoController.verificarJogo, 

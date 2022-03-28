@@ -15,15 +15,43 @@ module.exports = {
        {
         model:Generos,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        through: {attributes: []},
         required: true  
       },
        {
         model:Plataformas,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        through: {attributes: []},
         required: true
       }
       ],
       attributes: { exclude: ['createdAt', 'updatedAt'] }
+    });
+    return jogos;
+  },
+
+  async getAllPlataformasPorJogo(id){
+    const jogos =  await Jogos.findOne({
+      where:{
+        id
+      },
+     
+       include:{
+        model:Plataformas,
+        attributes: { include:['descricao','label'], exclude: ['createdAt', 'updatedAt'] },
+        through: {attributes: []},
+        required: true
+      },
+      
+      attributes: { 
+        exclude: [
+        'createdAt', 
+        'updatedAt', 
+        'status', 
+        'usuario_id', 
+        'sinopse'
+      ] 
+    }
     });
     return jogos;
   },
@@ -36,6 +64,9 @@ module.exports = {
         'data_lancamento', 
         'imagem_url'
       ],
+      where:{
+        status:'APROVADO'
+      }
     });
 
     return jogos;
