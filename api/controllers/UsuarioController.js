@@ -43,8 +43,6 @@ class UsuarioController{
       nickname:requisicao.user.nickname
     });
   }
-
-
 }
 
 module.exports = UsuarioController;
