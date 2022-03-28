@@ -4,12 +4,6 @@ const GeneroController = require('../controllers/GeneroController');
 
 const router = Router();
 
-router
-.options('/generos', (requisicao, resposta) => {
-  resposta.set('Access-Control-Allow-Methods', 'GET, POST');
-  resposta.set('Access-Control-Allow-Headers', '*');
-  resposta.status(204).end();
-});
 router.get('/generos', GeneroController.pegarTodosGeneros);
 router.get('/generos/:id', GeneroController.pegarTodosPorId);
 

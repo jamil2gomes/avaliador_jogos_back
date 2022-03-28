@@ -29,11 +29,17 @@ app.use((requisicao, resposta, proximo) => {
   proximo();
 });
 
-app.use((requisicao, resposta, proximo) => {
-  resposta.set('Access-Control-Allow-Origin', '*');
-  resposta.set('X-Powered-By', 'PHP/7.1.7');
-  proximo();
-});
+const corsMiddleware = function(requisicao, resposta, proximo) {
+    resposta.setHeader('Access-Control-Allow-Origin', '*');
+    resposta.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    resposta.setHeader('Access-Control-Allow-Headers', '*');
+    resposta.setHeader('Acess-Control-Allow-Credentials', 'false')
+    resposta.setHeader('X-Powered-By', 'PHP/7.1.7');
+    proximo();
+}
+
+app.use(corsMiddleware);
+app.options(corsMiddleware);
 
 routes(app);
 

@@ -4,16 +4,9 @@ const ComentarioController = require('../controllers/ComentarioController');
 
 const router = Router();
 
-router
-.options('/', (requisicao, resposta) => {
-  resposta.set('Access-Control-Allow-Methods', 'GET, POST');
-  resposta.set('Access-Control-Allow-Headers', 'Content-Type,  x-access-key');
-  resposta.status(204).end();
-})
-.get('/', ComentarioController.pegarTodosComentarios)
-.post('/', ComentarioController.cadastrarComentario)
 
-
+router.get('/', ComentarioController.pegarTodosComentarios)
+router.post('/', ComentarioController.cadastrarComentario)
 
 
 module.exports = router;
