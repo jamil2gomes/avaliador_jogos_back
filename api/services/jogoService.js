@@ -38,7 +38,7 @@ module.exports = {
      
        include:{
         model:Plataformas,
-        attributes: { include:['descricao','label'], exclude: ['createdAt', 'updatedAt'] },
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
         through: {attributes: []},
         required: true
       },
