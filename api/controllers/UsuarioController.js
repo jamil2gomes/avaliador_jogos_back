@@ -35,12 +35,13 @@ class UsuarioController{
 
   static login(requisicao, resposta){
     const token = criaTokenJWT(requisicao.user);
-    resposta.set('Authorization', token);
+
     resposta.status(200).send({
       id: requisicao.user.id,
       nome: requisicao.user.nome,
-      role: requisicao.user.rolem,
-      nickname:requisicao.user.nickname
+      role: requisicao.user.role,
+      nickname:requisicao.user.nickname,
+      token:token
     });
   }
 }

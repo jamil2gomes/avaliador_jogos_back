@@ -32,7 +32,7 @@ app.use((requisicao, resposta, proximo) => {
 const corsMiddleware = function(requisicao, resposta, proximo) {
     resposta.setHeader('Access-Control-Allow-Origin', '*');
     resposta.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    resposta.setHeader('Access-Control-Allow-Headers', '*');
+    resposta.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization, *');
     resposta.setHeader('Acess-Control-Allow-Credentials', 'false');
     resposta.setHeader('X-Powered-By', 'PHP/7.1.7');
     resposta.status(204);
