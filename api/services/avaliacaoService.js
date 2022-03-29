@@ -23,7 +23,7 @@ module.exports = {
 
     const media = this._calcularMediaDaAvaliacao(resposta);
 
-    const data = {...resposta, media:Number(media.toFixed(2))};
+    const data = {...resposta, media:media};
 
     return data;
   
