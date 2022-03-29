@@ -18,10 +18,10 @@ module.exports = {
     return comentarios;
   },
 
-  async cadastrarComentario(dadosRecebidos, jogos_id) {
+  async cadastrarComentario(dadosRecebidos, jogo_id) {
     return await Comentarios.create({
       descricao: dadosRecebidos.descricao,
-      jogos_id: jogos_id,
+      jogo_id: jogo_id,
       usuario_id: dadosRecebidos.usuario_id
     });
   },

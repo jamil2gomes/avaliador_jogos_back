@@ -47,7 +47,7 @@ class AvaliacaoController{
     const dados = {...dadosRecebidos, jogo_id};
     
     try {
-      await service.criarAvaliacao(dados);
+      await service.cadastrarAvaliacao(dados);
       resposta.status(201).end();
     } catch (error) {
       proximo(error);
