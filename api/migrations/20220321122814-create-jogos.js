@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nome: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(60)
       },
       sinopse: {
         type: Sequelize.STRING(600)
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       desenvolvedora: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(60)
       },
       imagem_url: {
         type: Sequelize.STRING,

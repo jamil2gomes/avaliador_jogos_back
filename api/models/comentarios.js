@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Comentarios.init({
-    descricao: DataTypes.STRING(400)
+    descricao: DataTypes.STRING(600)
   }, {
     sequelize,
     modelName: 'Comentarios',

@@ -10,7 +10,7 @@ module.exports = {
       },
       
       descricao: {
-        type: Sequelize.STRING(400)
+        type: Sequelize.STRING(600)
       },
 
       usuario_id: {

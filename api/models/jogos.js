@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Jogos.init({
-    nome: DataTypes.STRING(50),
+    nome: DataTypes.STRING(60),
     sinopse: DataTypes.STRING(600),
     data_lancamento: DataTypes.DATEONLY,
-    desenvolvedora: DataTypes.STRING(30),
+    desenvolvedora: DataTypes.STRING(60),
     imagem_url: DataTypes.STRING,
     status: DataTypes.ENUM('APROVADO', 'ANALISE')
   }, {

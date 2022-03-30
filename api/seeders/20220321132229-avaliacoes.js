@@ -21,8 +21,8 @@ module.exports = {
         feedback: 8,
         cores: 7,
         interface: 8,
-        jogo_id: 1,
-        usuario_id:2,
+        jogo_id: 2,
+        usuario_id:1,
         plataforma_id:1,
         createdAt: new Date(),
         updatedAt: new Date()
