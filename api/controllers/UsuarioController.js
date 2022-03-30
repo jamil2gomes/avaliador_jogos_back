@@ -14,7 +14,7 @@ function criaTokenJWT(usuario){
     node -e "console.log(require('crypto').randomBytes(256).toString('base64'))"
     depois usar o dotenv require('dotenv').config(); para usar no projeto no index
   */
-  const token = jwt.sign(payload, process.env.CHAVE_JWT,{expiresIn:'1h'});
+  const token = jwt.sign(payload, process.env.CHAVE_JWT);
   return token;
 }
 

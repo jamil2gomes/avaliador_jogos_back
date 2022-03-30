@@ -72,8 +72,9 @@ class AvaliacaoController{
   static async deletarAvaliacao(requisicao, resposta, proximo){
 
     const id = requisicao.params.avaliacaoId;
+    const jogo_id = requisicao.jogo.id;
     try {
-      await service.deletarAvaliacao(id);
+      await service.deletarAvaliacao(id, jogo_id);
       resposta.status(204).end();
     } catch (error) {
       proximo(error);

@@ -169,14 +169,15 @@ module.exports = {
 
   },
 
-  async deletarAvaliacao(id){
+  async deletarAvaliacao(id, jogo_id){
     const avaliacao = await Avaliacoes.findByPk(id);
 
     if(!avaliacao) throw new NaoEncontrado('Avaliação');
 
     return await Avaliacoes.destroy({
       where: {
-        id: avaliacao.id
+        id: avaliacao.id,
+        jogo_id:jogo_id
       }
     });
   },
