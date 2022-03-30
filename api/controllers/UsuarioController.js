@@ -12,7 +12,7 @@ function criaTokenJWT(usuario){
     Criar uma variavel de ambiente no .env na raiz do projeto a partir 
     do crypto com o seguinte comando
     node -e "console.log(require('crypto').randomBytes(256).toString('base64'))"
-    depois usar o dotenv require('dotenv').config(); para usar no projeto no index
+    depois usar o dotenv require('dotgit comenv').config(); para usar no projeto no index
   */
   const token = jwt.sign(payload, process.env.CHAVE_JWT);
   return token;
