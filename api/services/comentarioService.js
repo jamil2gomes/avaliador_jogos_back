@@ -18,12 +18,54 @@ module.exports = {
     return comentarios;
   },
 
+  async pegarComentarioDoUsuarioSobreOJogo(jogo_id, usuario_id) {
+    const comentarios = await Comentarios.findOne({
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      where: { 
+        jogo_id: jogo_id,
+        usuario_id:usuario_id
+      },
+    });
+
+    return comentarios;
+  },
+
   async cadastrarComentario(dadosRecebidos, jogo_id) {
-    return await Comentarios.create({
+    const response = await Comentarios.findOne({
+      where:{
+        jogo_id: jogo_id,
+        usuario_id: dadosRecebidos.usuario_id
+    }});
+
+    if(response){
+        return await Comentarios.update(
+          { descricao: dadosRecebidos.descricao},
+          {
+            where:{
+              jogo_id: jogo_id,
+              usuario_id: dadosRecebidos.usuario_id,
+              id:response.id
+            }
+          });
+    }
+    
+    const comentarioCriado =  await Comentarios.create({
       descricao: dadosRecebidos.descricao,
       jogo_id: jogo_id,
       usuario_id: dadosRecebidos.usuario_id
     });
+
+    return comentarioCriado;
   },
 
+  async atualizarComentario(dadosRecebidos, jogo_id, usuario_id) {
+    return await Comentarios.update(
+      { descricao: dadosRecebidos.descricao},
+      {
+        where:{
+          jogo_id: jogo_id,
+          usuario_id: usuario_id
+        }
+      });
+  },
 }

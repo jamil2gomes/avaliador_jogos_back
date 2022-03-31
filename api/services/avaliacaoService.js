@@ -1,4 +1,6 @@
 const Avaliacoes = require('../models').Avaliacoes;
+const Usuarios = require('../models').Usuarios;
+const Comentarios = require('../models').Comentarios;
 const Plataformas = require('../models').Plataformas;
 const Sequelize = require('sequelize');
 const NaoEncontrado = require('../erros/NaoEncontrado');
@@ -11,6 +13,15 @@ module.exports = {
     
     const resposta = await Avaliacoes.findOne({
       attributes:['id', 'audio', 'feedback', 'cores', 'interface'],
+      include:{
+        model:Usuarios,
+        attributes:[],
+        include:{
+          model:Comentarios,
+          attributes:['id', 'descricao']
+        }
+
+      },
       where:{
         jogo_id:jogo_id,
         usuario_id:usuario_id
@@ -41,7 +52,7 @@ module.exports = {
 
 
   _validarDadosAntesDeAtualizar(dados){
-    const campos = ['audio', 'feedback', 'cores', 'interface'];
+    const campos = ['audio', 'feedback', 'cores', 'interface', 'plataforma_id'];
     const dadosParaAtualizar = {};
   
     campos.forEach((campo) => {
@@ -59,6 +70,10 @@ module.exports = {
       if (campo === 'interface' && typeof valor === 'number') {
         dadosParaAtualizar[campo] = valor;
       }
+
+      if (campo === 'plataforma_id' && typeof valor === 'number') {
+        dadosParaAtualizar[campo] = valor;
+      }
     });
   
     if (Object.keys(dadosParaAtualizar).length === 0) {
@@ -68,12 +83,12 @@ module.exports = {
     return dadosParaAtualizar;
   },
 
-  async editarAvaliacaoDoJogo(dadosRecebidos) {
+  async editarAvaliacaoDoJogo(dadosRecebidos, jogo_id, idAvalicao) {
     const avaliacao = await Avaliacoes.findOne({
       where:{
-        jogo_id:dadosRecebidos.jogo_id,
+        jogo_id:jogo_id,
         usuario_id:dadosRecebidos.usuario_id,
-        id: dadosRecebidos.id,
+        id: idAvalicao,
       },
       raw:true,
     });
@@ -86,8 +101,9 @@ module.exports = {
       dadosParaAtualizar,
       {
         where: { 
-          jogo_id: dadosRecebidos.jogo_id,
-          usuario_id:dadosRecebidos.usuario_id
+          jogo_id: jogo_id,
+          usuario_id:dadosRecebidos.usuario_id,
+          id: idAvalicao
         }
       })
   
