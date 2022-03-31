@@ -8,7 +8,7 @@ module.exports = {
     const comentarios = await Comentarios.findAll({
       include: {
         model: Usuarios,
-        attributes: ['nickname', 'createdAt'],
+        attributes: ['nome','nickname', 'createdAt'],
         required: true
       },
       attributes: { exclude: ['createdAt', 'updatedAt'] },
