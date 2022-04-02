@@ -4,12 +4,8 @@ const passport = require('passport');
 
 const router = Router();
 
-
-router.get('/', ComentarioController.pegarTodosComentarios)
 router.get('/usuarios/:usuarioId', ComentarioController.pegarComentarioDoUsuarioSobreOJogo)
 router.post('/', passport.authenticate('bearer',{session:false}), ComentarioController.cadastrarComentario)
-
-router.put('/usuarios/:usuarioId', ComentarioController.atualizarComentario)
-
+router.delete('/usuarios/:usuarioId', ComentarioController.deletarComentario)
 
 module.exports = router;

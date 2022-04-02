@@ -4,17 +4,7 @@ const service = require('../services/comentarioService');
 
 class ComentarioController{
 
-  static async pegarTodosComentarios(requisicao, resposta, proximo){
-    
-    try {
-      const jogoId = requisicao.jogo.id;
-      const comentarios = await service.pegarComentariosDadoJogo(jogoId);
-      resposta.status(200).send(comentarios);
-    } catch (error) {
-      proximo(error);
-    }
-  }
-
+ 
   static async cadastrarComentario(requisicao, resposta, proximo){
     
     try {
@@ -39,18 +29,17 @@ class ComentarioController{
     }
   }
 
-  static async atualizarComentario(requisicao, resposta, proximo){
-    
+  static async deletarComentario(requisicao, resposta, proximo){
     try {
       const jogoId = requisicao.jogo.id;
       const {usuarioId} = requisicao.params;
-      const dadosRecebidos = requisicao.body;
-      const comentario = await service.atualizarComentario(dadosRecebidos,jogoId, usuarioId);
-      resposta.status(200).send(comentario);
+      await service.deletarComentario(jogoId, usuarioId);
+      resposta.status(204).end();
     } catch (error) {
       proximo(error);
     }
   }
+
 }
 
 module.exports = ComentarioController;

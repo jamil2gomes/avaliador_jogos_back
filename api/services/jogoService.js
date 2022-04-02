@@ -1,6 +1,8 @@
 const Jogos = require('../models').Jogos;
 const Generos = require('../models').Generos;
+const Comentarios = require('../models').Comentarios;
 const Plataformas = require('../models').Plataformas;
+const Usuarios = require('../models').Usuarios;
 const model = require('../models');
 const NaoEncontrado = require('../erros/NaoEncontrado');
 
@@ -23,6 +25,17 @@ module.exports = {
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         through: {attributes: []},
         required: true
+      },
+
+      {
+        model:Comentarios,
+        attributes: { exclude: ['updatedAt','usuario_id', 'jogo_id'] },
+        required: true,
+        include:{
+          model:Usuarios,
+          attributes: ['nome'],
+          required: true,
+        }
       }
       ],
       attributes: { exclude: ['createdAt', 'updatedAt'] }

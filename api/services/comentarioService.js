@@ -4,18 +4,23 @@ const Usuarios = require('../models').Usuarios;
 module.exports = {
 
 
-  async pegarComentariosDadoJogo(jogo_id) {
-    const comentarios = await Comentarios.findAll({
-      include: {
-        model: Usuarios,
-        attributes: ['nome','nickname', 'createdAt'],
-        required: true
-      },
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      where: { jogo_id: jogo_id },
-    });
 
-    return comentarios;
+  async deletarComentario(jogo_id, usuario_id){
+      const comentario = await Comentarios.findOne({
+        where:{
+          jogo_id,
+          usuario_id
+        },
+        raw:true
+      });
+
+      if(comentario){
+        return  await Comentarios.destroy({
+          where:{
+            id: comentario.id
+          }
+        })
+      }
   },
 
   async pegarComentarioDoUsuarioSobreOJogo(jogo_id, usuario_id) {
@@ -58,14 +63,4 @@ module.exports = {
     return comentarioCriado;
   },
 
-  async atualizarComentario(dadosRecebidos, jogo_id, usuario_id) {
-    return await Comentarios.update(
-      { descricao: dadosRecebidos.descricao},
-      {
-        where:{
-          jogo_id: jogo_id,
-          usuario_id: usuario_id
-        }
-      });
-  },
 }
