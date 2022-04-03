@@ -49,11 +49,6 @@ module.exports = {
         genero_id:10,
       },
       {
-        jogo_id: 11,
-        genero_id:10,
-      },
-
-      {
         jogo_id: 2,
         genero_id:12,
       },

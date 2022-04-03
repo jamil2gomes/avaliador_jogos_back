@@ -48,11 +48,6 @@ module.exports = {
         jogo_id: 10,
         plataforma_id: 1,
       },
-      {
-        jogo_id: 11,
-        plataforma_id: 1,
-      },
-
     ]);
   },
 

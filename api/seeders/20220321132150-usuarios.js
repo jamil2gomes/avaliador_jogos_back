@@ -6,7 +6,6 @@ module.exports = {
 
       {
         nome: 'Jamil',
-        nickname:"jamil2gomes",
         email: "jamil@hotmail.com",
         senha: "123456",
         role:"ADMIN",

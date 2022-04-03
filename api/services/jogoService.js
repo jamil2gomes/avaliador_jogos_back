@@ -1,5 +1,7 @@
 const Jogos = require('../models').Jogos;
 const Generos = require('../models').Generos;
+const Comentarios = require('../models').Comentarios;
+const Usuarios = require('../models').Usuarios;
 const Plataformas = require('../models').Plataformas;
 const model = require('../models');
 const NaoEncontrado = require('../erros/NaoEncontrado');
@@ -23,6 +25,15 @@ module.exports = {
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         through: {attributes: []},
         required: true
+      },
+      {
+        model:Comentarios,
+        attributes: ['createdAt', 'descricao', 'id'],
+        required: true,
+        include:{
+          model:Usuarios,
+          attributes: ['nome'],
+        }
       }
       ],
       attributes: { exclude: ['createdAt', 'updatedAt'] }
@@ -62,11 +73,9 @@ module.exports = {
         'id', 
         'nome', 
         'data_lancamento', 
-        'imagem_url'
+        'imagem_url',
+        'jogo_url'
       ],
-      where:{
-        status:'APROVADO'
-      }
     });
 
     return jogos;
@@ -75,18 +84,18 @@ module.exports = {
 
   async create(dadosRecebidos){
     
-    
-      const jogo = await Jogos.create({
+      let jogo = await Jogos.create({
         nome: dadosRecebidos.nome,
         sinopse:dadosRecebidos.sinopse,
-        data_lancamento: dadosRecebidos.data_lancamento,
-        desenvolvedora:dadosRecebidos.desenvolvedora,
-        imagem_url: dadosRecebidos.imagem_url,
+        data_lancamento: dadosRecebidos.data_lancamento ?? null,
+        desenvolvedora:dadosRecebidos.desenvolvedora ?? null,
+        imagem_url: dadosRecebidos.imagem_url ?? null,
+        jogo_url: dadosRecebidos.jogo_url,
         usuario_id: dadosRecebidos.usuario_id,
       });
   
-      await jogo.setGeneros(dadosRecebidos.generos);
-      await jogo.setPlataformas(dadosRecebidos.plataformas);
+       jogo.setGeneros(dadosRecebidos.generos);
+       jogo.setPlataformas(dadosRecebidos.plataformas);
 
       return jogo;
 
