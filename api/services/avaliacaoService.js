@@ -18,9 +18,8 @@ module.exports = {
         attributes:[],
         include:{
           model:Comentarios,
-          attributes:['id', 'descricao']
-        }
-
+          attributes:['id', 'descricao'],
+        },
       },
       where:{
         jogo_id:jogo_id,

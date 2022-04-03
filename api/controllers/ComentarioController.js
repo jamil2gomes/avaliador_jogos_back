@@ -51,6 +51,19 @@ class ComentarioController{
       proximo(error);
     }
   }
+
+  static async deletarComentario(requisicao, resposta, proximo){
+    
+    try {
+      const jogoId = requisicao.jogo.id;
+      const {usuarioId} = requisicao.params;
+      
+      await service.excluirComentario(jogoId, usuarioId);
+      resposta.status(204).end();
+    } catch (error) {
+      proximo(error);
+    }
+  }
 }
 
 module.exports = ComentarioController;

@@ -29,7 +29,6 @@ module.exports = {
       {
         model:Comentarios,
         attributes: ['createdAt', 'descricao', 'id'],
-        required: true,
         include:{
           model:Usuarios,
           attributes: ['nome'],
