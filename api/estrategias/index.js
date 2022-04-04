@@ -32,7 +32,6 @@ passport.use(new LocalStrategy({
 
     done(null, usuario);
   } catch (error) {
-    console.log(error)
     done(error);
   }
   

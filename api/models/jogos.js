@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     data_lancamento: DataTypes.DATEONLY,
     desenvolvedora: DataTypes.STRING(60),
     imagem_url: DataTypes.STRING,
-    status: DataTypes.ENUM('APROVADO', 'ANALISE')
+    jogo_url:DataTypes.STRING(400),
   }, {
     sequelize,
     modelName: 'Jogos',

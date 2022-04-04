@@ -74,8 +74,9 @@ app.use((erro, requisicao, resposta, proximo) => {
   )
 })
 
+const port = process.env.PORT || 3001;
 
 
-app.listen(process.env.PORTA_SERVIDOR, ()=>{console.log(`SERVIDOR RODANDO NA PORTA ${process.env.PORTA_SERVIDOR}`);});
+app.listen(port, ()=>{console.log(`SERVIDOR RODANDO NA PORTA ${port}`);});
 
 module.exports = app;

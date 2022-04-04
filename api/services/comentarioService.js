@@ -1,9 +1,6 @@
 const Comentarios = require('../models').Comentarios;
-const Usuarios = require('../models').Usuarios;
 
 module.exports = {
-
-
 
   async deletarComentario(jogo_id, usuario_id){
       const comentario = await Comentarios.findOne({
@@ -63,4 +60,23 @@ module.exports = {
     return comentarioCriado;
   },
 
+  async excluirComentario(jogo_id, usuario_id) {
+
+    const comentario = await Comentarios.findOne({
+      where:{
+        jogo_id: jogo_id,
+        usuario_id: usuario_id
+      }
+    });
+
+    if (comentario){
+      return await Comentarios.destroy(
+        {
+          where:{
+            jogo_id: jogo_id,
+            usuario_id: usuario_id
+          }
+        });
+    }
+  },
 }

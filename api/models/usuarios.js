@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING(30),
       allowNull: false,
     },
-    nickname: DataTypes.STRING(15),
+
     email: {
       type:DataTypes.STRING,
       allowNull: false,
@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+
     senha:{
       type: DataTypes.STRING,
       allowNull: false,
@@ -43,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    
     role:{ 
       type: DataTypes.ENUM('ADMIN', 'PROFESSOR'),
       defaultValue:'PROFESSOR'

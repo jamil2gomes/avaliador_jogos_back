@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const JogoController = require('../controllers/JogoController');
-const passport = require('passport');
+const middewaresAuth =require('../estrategias/middlewaresAuth')
 
 
 const roteadorComentario = require('./comentarioRouter');
@@ -10,7 +10,7 @@ const router = Router();
 
 
 router.get('/jogos', JogoController.pegarJogosParaTelaInicial)
-router.post('/jogos', JogoController.criarJogo)
+router.post('/jogos',middewaresAuth.bearer, JogoController.criarJogo)
 router.get('/jogos/:id', JogoController.pegarDetalhesJogo)
 router.get('/jogos/:id/plataformas', JogoController.pegarPlataformasDadoJogo)
 

@@ -1,15 +1,14 @@
 const {Router} = require('express');
 const UsuarioController = require('../controllers/UsuarioController');
-const passport = require('passport');
+const middewaresAuth = require('../estrategias/middlewaresAuth');
 
 const router = Router();
-
 
 router.post('/usuario', UsuarioController.criarUsuario);
 
 router.post(
   '/usuario/login',
-  passport.authenticate('local',{session:false}),
+  middewaresAuth.local,
   UsuarioController.login);
 
 

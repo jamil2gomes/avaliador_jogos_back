@@ -57,11 +57,12 @@ class AvaliacaoController{
   static async atualizarAvaliacao(requisicao, resposta, proximo){
 
     const jogo_id = requisicao.jogo.id;
-    const idAvaliacao = requisicao.params.avaliacaoId;
+    const id = requisicao.params.avaliacaoId;
     const dadosRecebidos = requisicao.body;
+    const dados = {...dadosRecebidos, jogo_id, id};
     
     try {
-      await service.editarAvaliacaoDoJogo(dadosRecebidos, jogo_id, idAvaliacao);
+      await service.editarAvaliacaoDoJogo(dados);
       resposta.status(204).end();
     } catch (error) {
       proximo(error);

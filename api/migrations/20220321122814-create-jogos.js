@@ -28,9 +28,13 @@ module.exports = {
           }
         }
       },
-      status: {
-        type: Sequelize.ENUM('APROVADO', 'ANALISE'),
-        defaultValue: 'ANALISE',
+      jogo_url: {
+        type: Sequelize.STRING(400),
+        validate:{
+          isUrl:{
+            msg:"Url inválida"
+          }
+        }
       },
       usuario_id: {
         allowNull: false,

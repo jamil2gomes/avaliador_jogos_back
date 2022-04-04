@@ -31,7 +31,6 @@ module.exports = {
       nome:usuario.nome,
       email: usuario.email,
       senha: senhaHash,
-      nickname:usuario.nickname
     });
   },
 
