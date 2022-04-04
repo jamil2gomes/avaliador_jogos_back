@@ -62,7 +62,7 @@ class AvaliacaoController{
     const dados = {...dadosRecebidos, jogo_id, id};
     
     try {
-      await service.editarAvaliacaoDoJogo(dados);
+      await service.editarAvaliacaoDoJogo(dados, jogo_id, id);
       resposta.status(204).end();
     } catch (error) {
       proximo(error);
