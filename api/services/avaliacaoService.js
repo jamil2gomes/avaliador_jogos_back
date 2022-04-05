@@ -12,13 +12,17 @@ module.exports = {
   async pegarAvaliacaoDoJogoDoUsuario(jogo_id, usuario_id) {
     
     const resposta = await Avaliacoes.findOne({
-      attributes:['id', 'audio', 'feedback', 'cores', 'interface'],
+      attributes:['id', 'audio', 'feedback', 'cores', 'interface',],
       include:{
         model:Usuarios,
-        attributes:[],
+        attributes:['id'],
         include:{
           model:Comentarios,
           attributes:['id', 'descricao'],
+          where:{
+            jogo_id:jogo_id,
+            usuario_id:usuario_id
+          }
         },
       },
       where:{
