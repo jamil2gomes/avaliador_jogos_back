@@ -25,7 +25,8 @@ module.exports = {
   },
    
   async create(usuario){
-    const usuarioExistente = Usuarios.findOne({where:{email:usuario.email}});
+    
+    const usuarioExistente = await Usuarios.findOne({where:{email:usuario.email}});
 
     if(usuarioExistente)
         throw new EmailExistente();
