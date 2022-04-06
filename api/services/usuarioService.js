@@ -1,5 +1,5 @@
 const Usuarios = require('../models').Usuarios;
-const NaoEncontrado = require('../erros/NaoEncontrado');
+const EmailExistente = require('../erros/EmailExistente');
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -25,6 +25,11 @@ module.exports = {
   },
    
   async create(usuario){
+    const usuarioExistente = Usuarios.findOne({where:{email:usuario.email}});
+
+    if(usuarioExistente)
+        throw new EmailExistente();
+
     const senhaHash =  await this.gerarSenhaHash(usuario.senha);
 
     return await Usuarios.create({
@@ -32,6 +37,24 @@ module.exports = {
       email: usuario.email,
       senha: senhaHash,
     });
+  },
+
+  async createOrFind(email, name, googleId, imageUrl){
+
+    const senhaHash =  await this.gerarSenhaHash(googleId);
+
+    const [usuario, created] = await Usuarios.findOrCreate({
+      where:{
+        email
+      },
+      defaults:{
+        nome: name,
+        senha: senhaHash,
+      },
+      raw:true
+    });
+
+    return usuario;
   },
 
 }

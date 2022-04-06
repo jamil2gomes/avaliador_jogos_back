@@ -34,17 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-
     senha:{
       type: DataTypes.STRING,
       allowNull: false,
-      validate:{
-        notEmpty:{
-          msg:"Senha não pode ser vazia"
-        }
-      }
     },
-    
+
     role:{ 
       type: DataTypes.ENUM('ADMIN', 'PROFESSOR'),
       defaultValue:'PROFESSOR'

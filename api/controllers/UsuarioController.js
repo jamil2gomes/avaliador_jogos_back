@@ -33,6 +33,24 @@ class UsuarioController{
     }
   }
 
+  static async loginGoogle(requisicao, resposta, proximo){
+    
+    try {
+      const {email, name, googleId} = requisicao.body;
+      const usuario = await service.createOrFind(email, name, googleId);
+      const token = criaTokenJWT(usuario);
+
+      resposta.status(200).send({
+        id: usuario.id,
+        nome: usuario.nome,
+        role: usuario.role,
+        token:token
+      });
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
   static login(requisicao, resposta){
     const token = criaTokenJWT(requisicao.user);
 
@@ -40,7 +58,6 @@ class UsuarioController{
       id: requisicao.user.id,
       nome: requisicao.user.nome,
       role: requisicao.user.role,
-      nickname:requisicao.user.nickname,
       token:token
     });
   }
