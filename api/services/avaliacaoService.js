@@ -120,7 +120,7 @@ module.exports = {
         [Sequelize.fn('AVG', Sequelize.col('interface')),'interface'],
       ],
       where:{
-        jogo_id:jogo_id,
+        jogo_id:jogo_id, 
       },
       raw:true,
     });
