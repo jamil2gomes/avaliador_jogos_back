@@ -1,5 +1,5 @@
 const Comentarios = require('../models').Comentarios;
-
+const Usuarios = require('../models').Usuarios;
 module.exports = {
 
   async deletarComentario(jogo_id, usuario_id){
@@ -30,6 +30,21 @@ module.exports = {
     });
 
     return comentarios;
+  },
+
+  async pegarTodosComentariosDadoJogo(jogo_id){
+     const comentarios = await Comentarios.findAll({
+      attributes: ['id', 'descricao', 'createdAt'],
+      include:{
+        model:Usuarios,
+        attributes:['nome'],
+      },
+       where:{
+        jogo_id
+       }, 
+     });
+
+     return comentarios;
   },
 
   async cadastrarComentario(dadosRecebidos, jogo_id) {

@@ -18,18 +18,16 @@ module.exports = {
         attributes:['id'],
         include:{
           model:Comentarios,
-          attributes:['id', 'descricao'],
-          where:{
-            jogo_id:jogo_id,
-            usuario_id:usuario_id
-          }
-        },
+          attributes:['descricao'],
+          },
+          required: true, 
       },
+     
       where:{
         jogo_id:jogo_id,
         usuario_id:usuario_id
       },
-      raw:true,
+      raw:true
     });
 
     if(!resposta)

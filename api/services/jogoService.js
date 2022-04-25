@@ -25,14 +25,6 @@ module.exports = {
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         through: {attributes: []},
         required: true
-      },
-      {
-        model:Comentarios,
-        attributes: ['createdAt', 'descricao', 'id'],
-        include:{
-          model:Usuarios,
-          attributes: ['nome'],
-        }
       }
       ],
       attributes: { exclude: ['createdAt', 'updatedAt'] }

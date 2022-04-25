@@ -17,6 +17,18 @@ class ComentarioController{
     }
   }
 
+  static async pegarTodosComentariosDadoJogo(requisicao, resposta, proximo){
+    
+    try {
+      const jogoId = requisicao.jogo.id;
+      
+      const response = await service.pegarTodosComentariosDadoJogo(jogoId);
+      resposta.status(200).send(response);
+    } catch (error) {
+      proximo(error);
+    }
+  }
+
   static async pegarComentarioDoUsuarioSobreOJogo(requisicao, resposta, proximo){
     
     try {

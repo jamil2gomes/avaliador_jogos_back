@@ -5,6 +5,7 @@ const middewaresAuth = require('../estrategias/middlewaresAuth');
 const router = Router();
 
 router.get('/usuarios/:usuarioId', ComentarioController.pegarComentarioDoUsuarioSobreOJogo)
+router.get('/', ComentarioController.pegarTodosComentariosDadoJogo)
 router.post('/', middewaresAuth.bearer, ComentarioController.cadastrarComentario)
 router.delete('/usuarios/:usuarioId',middewaresAuth.bearer, ComentarioController.deletarComentario)
 
